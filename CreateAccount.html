@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Create an Account</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="csspage.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<header>
+  <div class="header-container">
+    <div class="header-text">
+    </div>
+  </div>
+  <div class="gold-bar"></div>
+</header>
+
+<div class="signup-wrapper">
+  <div class="signup-box">
+    <h2>Create an account</h2>
+    <p>Already have an account? <a href="LoginPage.html">Log in</a></p>
+
+    <form>
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Enter your profile name" required>
+
+      <label for="email">School Email</label>
+      <input type="email" id="email" placeholder="Enter your email address" required>
+
+      <label for="password">Create a password</label>
+      <div class="password-field">
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <span class="toggle-password"> 👁️‍🗨️ Hide</span>
+      </div>
+
+      <p class="terms">
+        By creating an account, you agree to the
+        <a href="#">Terms of use</a> and <a href="#">Privacy Policy</a>.
+      </p>
+
+      <button type="submit" class="create-account-btn">Create an account</button>
+    </form>
+  </div>
+</div>
+
+<footer class="create-footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>National University</h3>
+      <p>Empowering student leaders through excellence and service.</p>
+    </div>
+    <div class="footer-section social">
+      <h4>Follow Us</h4>
+      <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a><br>
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a><br>
+      <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 National University Organizations. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

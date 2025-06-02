@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NU Environmental Club</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="csspage.css">
+  <style>
+    .org-header {
+      display: flex;
+      align-items: center;
+      background-color: #002147;
+      color: white;
+      padding: 20px;
+    }
+
+    .org-header img {
+      height: 50px;
+      margin-right: 15px;
+    }
+
+    .org-header h1 {
+      font-size: 24px;
+    }
+
+ 
+
+    .org-content {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .org-content h2 {
+      font-size: 26px;
+      margin-bottom: 15px;
+      color: #002147;
+    }
+
+    .org-content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      color: #FFD700;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="org-header">
+    <img src="Images/nulogo.png"  alt ="NU Logo">
+    <h1>National University – Environmental Club</h1>
+  </div>
+  <nav class="nav-container">
+  <ul>
+    <li><a href="MainHomepage.html">Home</a></li>
+    <li><a href="Homepage.html">Organization</a></li>
+    <li><a href="#about">About Us</a></li>
+  </ul>
+</nav>
+
+  <div class="banner"></div>
+
+  <section class="org-info-cards">
+  <div class="info-event-card">
+    <h3>Mission</h3>
+    <p>Our mission is to have students grind hard.</p>
+  </div>
+  <div class="info-event-card">
+    <h3>Vision</h3>
+    <p>To be a powerful guild.</p>
+  </div>
+  <div class="info-event-card">
+    <h3>Background</h3>
+    <p>This organization was founded in 2022 thanks to sung jin woo.</p>
+  </div>
+  <div class="info-event-card">
+    <h3>Goals</h3>
+    <p>We aim to clear all gates.</p>
+  </div>
+</section>
+
+
+  <!-- Officers Section -->
+   <section class="officers-section content-container">
+  <h2>Organization Officers</h2>
+<div class="officers-card-grid">
+  <div class="officer-card">
+    <img src="Images/gfeujios.webp" alt="President">
+    <div class="officer-info">
+      <h4>Jinwoo</h4>
+      <p>President</p>
+    </div>
+  </div>
+  <div class="officer-card">
+    <img src="Images/gfeujios.webp" alt="Vice President">
+    <div class="officer-info">
+      <h4>Juan Dela Cruz</h4>
+      <p>Vice President</p>
+    </div>
+  </div>
+  <div class="officer-card">
+    <img src="Images/gfeujios.webp" alt="Secretary">
+    <div class="officer-info">
+      <h4>Ana Lopez</h4>
+      <p>Secretary</p>
+    </div>
+  </div>
+</div>
+</section>
+
+
+  <!-- Events Section -->
+   <section class="events-section content-container">
+  <h2>Past Events</h2>
+  <div class="events-grid">
+    <div class="event-card">
+      <img src="Images/494827421_1235172214619607_2143135817146253635_n.jpg" alt="Blood Drive 2023">
+      <div>
+        <h4>Blood Drive 2023</h4>
+        <p>Partnered with Philippine Red Cross, collecting over 100 blood bags from NU students and faculty.</p>
+      </div>
+    </div>
+    <div class="event-card">
+      <img src="Images/gfeujios.webp" alt="First Aid Training">
+      <div>
+        <h4>First Aid Training</h4>
+        <p>Trained over 50 volunteers on emergency response and life-saving techniques.</p>
+      </div>
+    </div>
+    <!-- Add more event cards as needed -->
+  </div>
+
+  <a href="Homepage.html" class="back-btn">← Back to Homepage</a>
+
+</div>
+</section>
+<br>
+<br>
+
+<!-- Join Section -->
+<section class="join-section">
+  <h2>Membership Application</h2>
+<form action="thankyou.html" method="POST" class="join-form">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_subject" value="New Red Cross Youth Volunteer Application!">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_next" value="thankyou.html">
+
+
+  <label><i class="fas fa-user icon-blue"></i> Name </label>
+  <input type="text" name="name" placeholder="Name" required>
+
+  <label><i class="fas fa-id-card icon-blue"></i> Student No</label>
+  <input type="text" name="studentNo" placeholder="e.g. 2022-00000" required>
+
+  <label><i class="fas fa-book icon-blue"></i> School Program</label>
+  <input type="text" name="program" placeholder="e.g. BSIT-MWA SECA" required>
+
+  <label><i class="fas fa-envelope icon-blue"></i> School Email</label>
+  <input type="email" name="email" placeholder="e.g. name@students.nu-dasma.edu.ph" required>
+
+<label><i class="fas fa-venus-mars icon-blue"></i> Gender</label>
+<div class="gender-options">
+  <label><input type="radio" name="gender" value="Male" required> Male</label>
+  <label><input type="radio" name="gender" value="Female"> Female</label>
+  <label><input type="radio" name="gender" value="Other"> Other (Please specify)</label>
+  <label><input type="radio" name="gender" value="Prefer not to say"> Prefer not to say</label>
+</div>
+  <button type="submit">Submit</button>
+</form>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>National University</h3>
+      <p>Empowering student leaders through excellence and service.</p>
+    </div>
+    <div class="footer-section social">
+      <h4>Follow Us</h4>
+      <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a><br>
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a><br>
+      <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 National University Organizations. All rights reserved.</p>
+  </div>
+</footer>
+
+
+</body>
+</html>
