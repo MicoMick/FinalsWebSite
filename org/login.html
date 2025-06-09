@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login Page</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="csspage.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<header>
+  <div class="header-container">
+    <div class="header-text"></div>
+  </div>
+  <div class="gold-bar"></div>
+</header>
+
+<div class="login-container">
+  <div class="login-box">
+    <h2>Sign in</h2>
+    <form action="login.php" method="POST" onsubmit="return validateLoginForm()">
+      <input type="text" name="email" id="loginEmail" placeholder="Enter your School Email" required minlength="15" maxlength="60">
+      
+      <div class="password-wrapper">
+        <input type="password" name="password" id="loginPassword" placeholder="Your password" required minlength="7" maxlength="30">
+        <span class="toggle-password">
+          <i class="fa-solid fa-eye"></i>
+        </span>
+      </div>
+      
+      <button type="submit" class="login-btn">Log in</button>
+    </form> 
+  </div>
+
+  <div class="divider">
+    <hr><span>New to our community</span><hr>
+  </div>
+
+  <a href="signup.html">
+    <button class="create-account">Create an account</button>
+  </a>
+</div>
+
+<footer class="log-footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>National University</h3>
+      <p>Empowering student leaders through excellence and service.</p>
+    </div>
+    <div class="footer-section social">
+      <h4>Follow Us</h4>
+      <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a><br>
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a><br>
+      <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 National University Organizations. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // Toggle password visibility using Font Awesome icon
+  document.addEventListener("DOMContentLoaded", function () {
+    const toggle = document.querySelector(".toggle-password");
+    const passwordInput = document.getElementById("loginPassword");
+    const icon = toggle.querySelector("i");
+
+    toggle.addEventListener("click", function () {
+      const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+      icon.classList.toggle("fa-eye");
+      icon.classList.toggle("fa-eye-slash");
+    });
+  });
+
+  // Form validation
+  function validateLoginForm() {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    if (!email.includes("@nu-dasma.edu.ph")) {
+      alert("Email must contain '@nu-dasma.edu.ph'");
+      return false;
+    }
+
+    if (password.length < 7) {
+      alert("Password must be at least 7 characters long.");
+      return false;
+    }
+
+    return true;
+  }
+</script>
+
+</body>
+</html>

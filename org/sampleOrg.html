@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="samporg.css">
+  <title>Edit Organization</title>
+</head>
+<body>
+
+  <h1>Edit Organization</h1>
+
+  <form action="logout.php" method="post" style="position: absolute; top: 20px; right: 20px;">
+    <button type="submit" class="btn-gold logout-btn">Logout</button>
+  </form>
+
+  <form id="orgForm" enctype="multipart/form-data">
+    <label>Organization Name:</label><br>
+    <input type="text" id="orgName" name="orgName"><br><br>
+
+    <label>Upload New Logo:</label><br>
+    <input type="file" id="orgImage" name="orgImage" accept="image/*"><br><br>
+
+    <fieldset style="padding:10px; max-width:180px;">
+      <legend><strong>New Logo Preview</strong></legend>
+      <img id="selectedPreview" src="" alt="Selected Preview" width="150"
+           style="display:none; border: 1px solid #aaa; padding: 5px;">
+    </fieldset><br>
+
+    <label>Tagline:</label><br>
+    <textarea id="orgTagline" name="orgTagline" rows="4" cols="50" placeholder="Enter tagline here..."></textarea><br><br>
+
+    <label>Mission:</label><br>
+<textarea id="orgMission" name="mission" rows="3" cols="50" placeholder="Enter mission here..."></textarea><br><br>
+
+<label>Vision:</label><br>
+<textarea id="orgVision" name="vision" rows="3" cols="50" placeholder="Enter vision here..."></textarea><br><br>
+
+<label>Background:</label><br>
+<textarea id="orgBackground" name="background" rows="3" cols="50" placeholder="Enter background here..."></textarea><br><br>
+
+<label>Goals:</label><br>
+<textarea id="orgGoals" name="goals" rows="3" cols="50" placeholder="Enter goals here..."></textarea><br><br>
+
+    <button type="submit">Save Changes</button>
+  </form>
+
+  
+  <section class="org-tables">
+  <div class="table-section">
+    <h2>Pending Applications</h2>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Student No</th>
+          <th>Program</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="applicationsTableBody">
+        <tr><td colspan="5">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-section">
+    <h2>Accepted Members</h2>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Program</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="membersTableBody">
+        <tr><td colspan="3">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const orgId = params.get('id');
+
+    if (!orgId) {
+      alert('Missing organization ID in URL');
+    }
+
+    function loadApplications() {
+  fetch(`get_applications.php?org_id=${orgId}`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.getElementById('applicationsTableBody');
+      tbody.innerHTML = '';
+      if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5">No pending applications.</td></tr>';
+      } else {
+        data.forEach(app => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${app.student_name}</td>
+            <td>${app.student_number}</td>
+            <td>${app.program}</td>
+            <td>${app.school_email}</td>
+            <td>
+              <button class="btn-accept" onclick="handleApplication(${app.id}, 'accepted')">Accept</button>
+              <button class="btn-decline" onclick="handleApplication(${app.id}, 'declined')">Decline</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+    });
+}
+
+
+    function handleApplication(appId, action) {
+      fetch('process_application.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: appId, status: action })
+      })
+      .then(res => res.text())
+      .then(alert)
+      .then(loadApplications)
+      .then(loadMembers);
+    }
+
+    function loadMembers() {
+  fetch(`get_members.php?org_id=${orgId}`)
+    .then(res => res.json())
+    .then(data => {
+      const tbody = document.getElementById('membersTableBody');
+      tbody.innerHTML = '';
+      if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3">No accepted members yet.</td></tr>';
+      } else {
+        data.forEach(member => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${member.student_name}</td>
+            <td>${member.program}</td>
+            <td><button class="btn-remove" onclick="removeMember(${member.id}, ${orgId})">Remove</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+    });
+}
+
+    function removeMember(Id, orgId) {
+      if (!confirm('Are you sure you want to remove this member?')) return;
+
+      fetch('remove_member.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: Id, org_id: orgId })
+      })
+      .then(res => res.text())
+      .then(alert)
+      .then(loadMembers);
+    }
+
+    // Load organization info
+    fetch(`get_org_by_id.php?id=${orgId}`)
+      .then(res => res.text())
+      .then(text => {
+        try {
+          const data = JSON.parse(text);
+          document.getElementById('orgName').value = data.org_name || '';
+          document.getElementById('orgTagline').value = data.tagline || '';
+          document.getElementById('orgName').value = data.org_name || '';
+document.getElementById('orgTagline').value = data.tagline || '';
+document.getElementById('orgMission').value = data.mission || '';
+document.getElementById('orgVision').value = data.vision || '';
+document.getElementById('orgBackground').value = data.background || '';
+document.getElementById('orgGoals').value = data.goals || '';
+
+        } catch (err) {
+          console.error('Invalid JSON from server:', text);
+          alert("Failed to load organization data.");
+        }
+      })
+      .catch(err => {
+        console.error('Fetch error:', err);
+        alert("Error loading organization data.");
+      });
+
+    // Live image preview
+    document.getElementById('orgImage').addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const selectedPreview = document.getElementById('selectedPreview');
+          selectedPreview.src = e.target.result;
+          selectedPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Submit org info and upload image
+    document.getElementById('orgForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const name = document.getElementById('orgName').value.trim();
+const tagline = document.getElementById('orgTagline').value.trim();
+const mission = document.getElementById('orgMission').value.trim();
+const vision = document.getElementById('orgVision').value.trim();
+const background = document.getElementById('orgBackground').value.trim();
+const goals = document.getElementById('orgGoals').value.trim();
+
+      if (!name) return alert("Organization name is required.");
+
+      try {
+        await fetch('update_org.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ id: orgId, org_name: name, tagline, mission, vision, background, goals })
+});
+        
+
+        const imageInput = document.getElementById('orgImage');
+        if (imageInput.files.length > 0) {
+          const formData = new FormData();
+          formData.append('image', imageInput.files[0]);
+          formData.append('id', orgId);
+
+          const imgRes = await fetch('upload_image.php', {
+            method: 'POST',
+            body: formData
+          });
+
+          const imgText = await imgRes.text();
+          console.log("Image upload:", imgText);
+        }
+
+        alert("Changes saved!");
+      } catch (err) {
+        console.error(err);
+        alert("Error saving changes: " + err.message);
+      }
+    });
+
+    // Initial load
+    loadApplications();
+    loadMembers();
+  </script>
+</body>
+</html>

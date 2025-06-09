@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NU Organizations</title>
+  <link rel="stylesheet" href="csspage.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #222;
+    }
+
+    header {
+      text-align: center;
+      background-color: #002147;
+      color: white;
+      padding: 30px 20px 10px;
+    }
+
+    .nu-logo {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    .gold-bar {
+      height: 10px;
+      width: 100%;
+      background-color: #FFD700;
+      margin-top: 20px;
+    }
+
+    nav.nav-container {
+      background-color: #003366;
+      padding: 10px 0;
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style-type: none;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 30px 20px;
+    }
+
+    .org-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .org-card {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-radius: 10px;
+      overflow: hidden;
+      text-decoration: none;
+      color: #002147;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .org-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .org-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .org-info {
+      padding: 15px;
+    }
+
+    .org-info h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .org-info p {
+      font-size: 14px;
+      color: #444;
+    }
+
+    .site-footer {
+      background-color: #002147;
+      color: white;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .footer-section {
+      margin-bottom: 20px;
+    }
+
+    .footer-section h3, .footer-section h4 {
+      margin-bottom: 10px;
+    }
+
+    .footer-section a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .logout-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <form action="logout.php" method="post" class="logout-button">
+  <input type="submit" value="Logout">
+  </form>
+
+  <header>
+    <div class="header-container">
+      <img src="Images/nulogo.png" alt="NU Logo" class="nu-logo">
+      <div class="header-text">
+        <h1>National University of Dasmariñas</h1>
+        <p>Select a Student Organization</p>
+      </div>
+    </div>
+    <div class="gold-bar"></div>
+  </header>
+
+  <nav class="nav-container">
+    <ul>
+      <li><a href="orgMain.html">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="org-grid" id="orgList"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-section about">
+        <h3>National University</h3>
+        <p>Empowering student leaders through excellence and service.</p>
+      </div>
+      <div class="footer-section social">
+        <h4>Follow Us</h4>
+        <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a><br>
+        <a href="#"><i class="fab fa-instagram"></i> Instagram</a><br>
+        <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 National University Organizations. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { loadOrgData } from './orgUtils.js';
+
+    async function loadAllOrgs() {
+      try {
+        const res = await fetch('get_all_orgs.php');
+        const orgs = await res.json();
+
+        const container = document.getElementById('orgList');
+        container.innerHTML = '';
+
+        orgs.forEach(org => {
+          const card = document.createElement('a');
+          card.className = 'org-card';
+          card.href = `viewOrg.html?id=${org.id}`;
+
+          card.innerHTML = `
+            <img id="logo-${org.id}" src="placeholder.jpg" alt="Org Logo" />
+            <div class="org-info">
+              <h3 id="name-${org.id}">${org.org_name}</h3>
+              <p id="tagline-${org.id}">${org.tagline || 'No tagline yet.'}</p>
+            </div>
+          `;
+
+          container.appendChild(card);
+
+          // Replace logo with actual image
+          const logoImg = document.getElementById(`logo-${org.id}`);
+          logoImg.src = `get_org_image.php?id=${org.id}&t=${Date.now()}`;
+        });
+
+      } catch (err) {
+        console.error("Failed to load orgs:", err);
+        document.getElementById('orgList').innerText = 'Error loading organizations.';
+      }
+    }
+
+    loadAllOrgs();
+  </script>
+
+</body>
+</html>

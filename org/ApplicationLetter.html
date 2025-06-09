@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="Lettercss.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Application Letter</title>
+</head>
+<body>
+
+<div class="org-header">
+  <h1>NU Organization Membership</h1>
+</div>
+
+<section class="join-section">
+  <h2>Membership Application</h2>
+  <form id="applicationForm" class="join-form">
+
+    <label><i class="fas fa-user icon-blue"></i> Name </label>
+    <input type="text" name="student_name" id="name" placeholder="Name" required>
+
+    <label><i class="fas fa-id-card icon-blue"></i> Student No</label>
+    <input type="text" name="student_number" id="studentNo" placeholder="e.g. 2022-00000" required>
+
+    <label><i class="fas fa-book icon-blue"></i> School Program</label>
+    <input type="text" name="program" id="program" placeholder="e.g. BSIT-MWA SECA" required>
+
+    <label><i class="fas fa-envelope icon-blue"></i> School Email</label>
+    <input type="email" name="school_email" id="email" placeholder="e.g. name@nu-dasma.edu.ph" required>
+
+    <!-- You must dynamically pass the org ID of the org being applied to -->
+    <input type="hidden" name="org_id" id="orgIdInput">
+
+    <button type="submit">Submit</button>
+  </form>
+</section>
+
+<script>
+  document.getElementById('applicationForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Validation
+    const email = document.getElementById("email").value.trim();
+    const studentNo = document.getElementById("studentNo").value.trim();
+    const studentNoPattern = /^\d{4}-\d{6}$/;
+
+    if (!email.endsWith("@nu-dasma.edu.ph")) {
+      alert("Please use a valid NU Dasma student email (e.g., name@nu-dasma.edu.ph).");
+      return;
+    }
+
+    if (!studentNoPattern.test(studentNo)) {
+      alert("Student number must follow the format: YYYY-000000 (e.g., 2022-123456).");
+      return;
+    }
+
+    // Set the hidden input BEFORE FormData is created
+    document.getElementById('orgIdInput').value = orgId;
+
+    // Now create FormData (after org ID is set)
+    const form = e.target;
+    const formData = new FormData(form);
+
+    // Submit via fetch
+    fetch('submit_application.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(res => res.text())
+    .then(msg => {
+      alert(msg);
+      form.reset();
+    })
+    .catch(err => {
+      alert("Submission failed. Please try again.");
+      console.error(err);
+    });
+  });
+</script>
+
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>National University</h3>
+      <p>Empowering student leaders through excellence and service.</p>
+    </div>
+
+    <div class="footer-section social">
+      <h4>Follow Us</h4>
+      <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a><br>
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a><br>
+      <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 National University Organizations. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

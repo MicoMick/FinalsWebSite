@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title id="pageTitle">Organization Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="csspage.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .org-header {
+      display: flex;
+      align-items: center;
+      background-color: #002147;
+      color: white;
+      padding: 20px;
+    }
+
+    .org-header img {
+      height: 50px;
+      margin-right: 15px;
+    }
+
+    .org-header h1 {
+      font-size: 24px;
+    }
+
+    .org-info-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 40px auto;
+      max-width: 1000px;
+      padding: 0 20px;
+    }
+
+    .info-event-card {
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .org-leader-section {
+      text-align: center;
+      margin: 50px auto;
+      padding: 0 20px;
+      max-width: 700px;
+    }
+
+    .org-leader-section h2 {
+      font-size: 28px;
+      color: #002147;
+      margin-bottom: 30px;
+    }
+
+    .leader-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .leader-card img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 100px;
+      border: 4px solid #FFD700;
+      background-color: #eee;
+    }
+
+    .leader-details {
+      text-align: left;
+    }
+
+    .leader-details h3 {
+      font-size: 22px;
+      color: #002147;
+      margin: 0;
+    }
+
+    .leader-details p {
+      font-size: 16px;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    .accepted-members {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .accepted-members h2 {
+      color: #002147;
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #002147;
+      color: white;
+    }
+
+    .site-footer {
+      background-color: #002147;
+      color: white;
+      padding: 40px 20px;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .footer-section h3, .footer-section h4 {
+      color: #FFD700;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="org-header">
+  <img id="orgLogo" src="placeholder.png" alt="Organization Logo">
+  <h1 id="orgName">Loading Organization...</h1>
+</div>
+
+<nav class="nav-container">
+  <ul>
+    <li><a href="orgMain.html">Home</a></li>
+    <li><a id="registerLink" href="#">Register</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="org-info-cards">
+    <div class="info-event-card"><h3>Mission</h3><p>Loading...</p></div>
+    <div class="info-event-card"><h3>Vision</h3><p>Loading...</p></div>
+    <div class="info-event-card"><h3>Background</h3><p>Loading...</p></div>
+    <div class="info-event-card"><h3>Goals</h3><p>Loading...</p></div>
+  </section>
+
+  <section class="org-leader-section">
+    <h2>Organization Leader</h2>
+    <div class="leader-card">
+      <div class="leader-details">
+        <h3 id="leaderName">Loading...</h3>
+        <p id="leaderEmail">Loading...</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="accepted-members">
+    <h2>Accepted Members</h2>
+    <table id="membersTable">
+      <thead>
+        <tr><th>Name</th><th>Program</th></tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="2">Loading...</td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h3>National University</h3>
+      <p>Empowering student leaders through excellence and service.</p>
+    </div>
+    <div class="footer-section social">
+      <h4>Follow Us</h4>
+      <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a><br>
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a><br>
+      <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 National University Organizations. All rights reserved.</p>
+  </div>
+</footer>
+
+<script type="module">
+  import { loadOrgData } from './orgUtils.js';
+
+  const orgId = new URLSearchParams(window.location.search).get('id');
+  const registerLink = document.getElementById('registerLink');
+
+  if (orgId) {
+    loadOrgData(orgId, {
+      nameElementId: 'orgName',
+      logoElementId: 'orgLogo'
+    });
+
+    // Register link update
+    registerLink.href = `ApplicationLetter.html?id=${orgId}`;
+
+    // Fetch and display members
+    fetch(`get_members.php?org_id=${orgId}`)
+      .then(res => res.json())
+      .then(data => {
+        const tableBody = document.querySelector('#membersTable tbody');
+        tableBody.innerHTML = '';
+        if (data.length === 0) {
+          tableBody.innerHTML = '<tr><td colspan="2">No accepted members yet.</td></tr>';
+        } else {
+          data.forEach(member => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${member.student_name}</td><td>${member.program}</td>`;
+            tableBody.appendChild(row);
+          });
+        }
+      });
+
+    // Leader info
+    fetch(`get_org_leader.php?org_id=${orgId}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('leaderName').textContent = data.error ? "Leader not assigned yet." : `Name: ${data.name}`;
+        document.getElementById('leaderEmail').textContent = data.error ? "" : `Email: ${data.email}`;
+      });
+
+    // Org info (mission, vision, etc.)
+    fetch(`get_org_by_id.php?id=${orgId}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('orgName').innerText = data.org_name || 'Organization Page';
+        document.getElementById('pageTitle').innerText = data.org_name || 'Organization Page';
+        document.getElementById('orgLogo').src = `get_org_image.php?id=${orgId}`;
+
+        const infoCards = document.querySelectorAll(".info-event-card");
+        infoCards[0].querySelector("p").innerText = data.mission || "No mission provided.";
+        infoCards[1].querySelector("p").innerText = data.vision || "No vision provided.";
+        infoCards[2].querySelector("p").innerText = data.background || "No background provided.";
+        infoCards[3].querySelector("p").innerText = data.goals || "No goals provided.";
+      });
+
+  } else {
+    console.error("Missing organization ID.");
+    registerLink.style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
